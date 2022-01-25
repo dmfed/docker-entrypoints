@@ -3,15 +3,16 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/rs/zerolog/log"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	log.Printf("Received HTTP request from: %s", r.RemoteAddr)
+	log.Info().Msgf("Received HTTP request from: %s", r.RemoteAddr)
 	fmt.Fprint(w, "Greetings from test app!")
 }
 
@@ -23,21 +24,21 @@ func main() {
 
 	go func() {
 		if err := srv.ListenAndServe(); err != nil {
-			log.Printf("srv.ListenAndServe() returned error %s", err)
+			log.Info().Msgf("srv.ListenAndServe() returned error %s", err)
 		}
 	}()
 
-	log.Println("Application started.")
+	log.Info().Msg("Application started.")
 
 	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, syscall.SIGTERM, syscall.SIGINT)
 
 	sig := <-stop
-	log.Printf("Stopping app on signal: %s", sig)
+	log.Info().Msgf("Stopping app on signal: %s", sig)
 
 	if err := srv.Shutdown(context.Background()); err != nil {
-		log.Printf("srv.Shutdown() returned %s", err)
+		log.Info().Msgf("srv.Shutdown() returned %s", err)
 	}
 
-	log.Println("All done...")
+	log.Info().Msg("All done...")
 }

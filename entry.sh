@@ -1,1 +1,1 @@
-exec ./app.bin
+exec $@
