@@ -1,4 +1,4 @@
-## System signals when using shell script ad entry point
+## System signals when using shell script as entry point
 
 To try all the stuff yourself:
 ```
@@ -35,6 +35,6 @@ results in **./entry.sh** being executed on launch regardless
 of what command we pass to the container. This is useful when 
 certain setup work needs to be done before we actually run anything.
 Again because of using **exec** in shell script the actual command 
-gets PID=1. 
+gets PID=1.
 
 
