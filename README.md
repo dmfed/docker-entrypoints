@@ -30,4 +30,11 @@ result.
 3. **CMD ["./entry.sh"]**  will fail, since **entry.sh** is not
 a binary executable. 
 
+3. **ENTRYPOINT ["/bin/sh", "./entry.sh"]** in Dockerfile 
+results in **./entry.sh** being executed on launch regardless
+of what command we pass to the container. This is useful when 
+certain setup work needs to be done before we actually run anything.
+Again because of using **exec** in shell script the actual command 
+gets PID=1. 
+
 
