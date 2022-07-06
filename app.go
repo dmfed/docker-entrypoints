@@ -30,6 +30,10 @@ func main() {
 
 	log.Info().Msg("Application started.")
 
+	// note that we're creating buffered channel here
+	// otherwise we're not guaranteed that we'll trap 
+	// signal (the runtime will not wait for our app to 
+	// to consume it from the channel)
 	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, syscall.SIGTERM, syscall.SIGINT)
 
